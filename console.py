@@ -1,28 +1,53 @@
 #!/usr/bin/python3
 import cmd
 from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 from models import storage
 class HBNBCommand(cmd.Cmd):
     """Command HBNB class"""
     prompt = "(hbnb) "
+    classes_list = ("BaseModel", "User", "State", "City", "Amenity", "Place", "Review")
 
-    
+    @classmethod
+    def print_id(self, class_name):
+        """Call the class, then print its id"""
+        my_model = class_name()
+        my_model.save()
+        print(my_model.id)
     def do_create(self, args):
             list = args.split(" ")
             if (list[0] == ''):
                 print("** class name missing **")
-            elif list[0] != "BaseModel":
+            elif list[0] not in HBNBCommand.classes_list:
                 print("** class doesn't exist **")
             else:
-                my_model = BaseModel()
-                my_model.save()
-                print(my_model.id)
+                if (list[0] == "BaseModel"):
+                    HBNBCommand.print_id(BaseModel)
+                elif (list[0] == "User"):
+                    HBNBCommand.print_id(User)
+                elif (list[0] == "State"):
+                    HBNBCommand.print_id(State)
+                elif (list[0] == "City"):
+                    HBNBCommand.print_id(City)
+                elif (list[0] == "Amenity"):
+                    HBNBCommand.print_id(Amenity)
+                elif (list[0] == "Place"):
+                    HBNBCommand.print_id(State)
+                else:
+                    HBNBCommand.print_id(Review)
+
+
     def do_show(self, args):
         list = args.split(" ")
         
         if (list[0] == ""):
             print("** class name missing **")
-        elif list[0] != "BaseModel":
+        elif list[0] not in HBNBCommand.classes_list:
             print("** class doesn't exist **")
         elif len(list) < 2:
             print("** instance id missing **")
@@ -44,7 +69,7 @@ class HBNBCommand(cmd.Cmd):
             if (list[0] == ''):
                 print("** class name missing **")
                 return
-            elif list[0] != "BaseModel":
+            elif list[0] not in HBNBCommand.classes_list:
                 print("** class doesn't exist **")
                 return
             elif len(list) < 2:
@@ -61,7 +86,7 @@ class HBNBCommand(cmd.Cmd):
 
         
     def do_all(self, args):
-        #
+        
         list = args.split(" ")
         test_var = 0
         
@@ -71,8 +96,9 @@ class HBNBCommand(cmd.Cmd):
             all_objs = storage.all() # get the storage
             for obj_id in all_objs.keys(): # loop through the storage
                 list_of_dics.append(str(all_objs[obj_id]))
+           
             print(list_of_dics)
-        if len(list) > 0 and list[0] == "BaseModel":
+        if len(list) > 0 and list[0] in HBNBCommand.classes_list:
             list_of_dics = [] # create empty dictionary
             all_objs = storage.all() # get the storage
             for obj_id in all_objs.keys(): # loop through the storage
@@ -80,7 +106,7 @@ class HBNBCommand(cmd.Cmd):
                 if (class_name == list[0]):
                     list_of_dics.append(str(all_objs[obj_id]))
             print(list_of_dics)
-        elif (len(list) > 0 and list[0] != "BaseModel" and test_var == 0): 
+        elif (len(list) > 0 and list[0] not in HBNBCommand.classes_list and test_var == 0): 
                 print("** class doesn't exist **")
 
 
@@ -90,7 +116,7 @@ class HBNBCommand(cmd.Cmd):
         if (list[0] == ''):
             print("** class name missing **")
             return
-        if list[0] != "BaseModel":
+        if list[0] not in HBNBCommand.classes_list:
             print("** class doesn't exist **")
             return
         if len(list) < 2:
@@ -109,12 +135,22 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
                 return
         if (len(list) == 4):
-            all_objs = storage.all() # get the storage
-            for obj_id in all_objs.keys(): # loop through the storage
-                class_name, class_id = obj_id.split(".") # split the obj [basemodel].id
-                if (class_name == "BaseModel" and list[3] == "__class__"):
-                    storage.all()["__class__"] = list[4]
-                    print(storage.all()["__class__"])
+            all_objs = storage.all()
+            for key in all_objs:
+                if (list[0] in HBNBCommand.classes_list):
+                    class_name, class_id = key.split(".")
+                    if list[0] == class_name and list[1] == class_id:
+                        setattr(all_objs[key], list[2], list[3])
+                        
+
+
+                
+        
+
+    
+               
+                    
+                    
 
 
              
