@@ -3,6 +3,7 @@ from models.base_model import BaseModel
 
 
 class Place(BaseModel):
+    """Setup public instances for the class"""
     city_id = ""  # City.id
     user_id = ""  # User.id
     name = ""
