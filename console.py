@@ -2,13 +2,23 @@
 import cmd
 from models.base_model import BaseModel
 from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 from models import storage
 class HBNBCommand(cmd.Cmd):
     """Command HBNB class"""
     prompt = "(hbnb) "
-    classes_list = ("BaseModel", "User")
+    classes_list = ("BaseModel", "User", "State", "City", "Amenity", "Place", "Review")
 
-    
+    @classmethod
+    def print_id(self, class_name):
+        """Call the class, then print its id"""
+        my_model = class_name()
+        my_model.save()
+        print(my_model.id)
     def do_create(self, args):
             list = args.split(" ")
             if (list[0] == ''):
@@ -17,13 +27,20 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
             else:
                 if (list[0] == "BaseModel"):
-                    my_model = BaseModel()
-                    my_model.save()
-                    print(my_model.id)
+                    HBNBCommand.print_id(BaseModel)
+                elif (list[0] == "User"):
+                    HBNBCommand.print_id(User)
+                elif (list[0] == "State"):
+                    HBNBCommand.print_id(State)
+                elif (list[0] == "City"):
+                    HBNBCommand.print_id(City)
+                elif (list[0] == "Amenity"):
+                    HBNBCommand.print_id(Amenity)
+                elif (list[0] == "Place"):
+                    HBNBCommand.print_id(State)
                 else:
-                    my_model = User()
-                    my_model.save()
-                    print(my_model.id)
+                    HBNBCommand.print_id(Review)
+
 
     def do_show(self, args):
         list = args.split(" ")
@@ -69,7 +86,7 @@ class HBNBCommand(cmd.Cmd):
 
         
     def do_all(self, args):
-        #
+        
         list = args.split(" ")
         test_var = 0
         
@@ -79,6 +96,7 @@ class HBNBCommand(cmd.Cmd):
             all_objs = storage.all() # get the storage
             for obj_id in all_objs.keys(): # loop through the storage
                 list_of_dics.append(str(all_objs[obj_id]))
+           
             print(list_of_dics)
         if len(list) > 0 and list[0] in HBNBCommand.classes_list:
             list_of_dics = [] # create empty dictionary
