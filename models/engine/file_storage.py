@@ -2,6 +2,7 @@
 
 import os, json
 from models.base_model import BaseModel
+from models.user import User
 class FileStorage:
     """Manage File storage (serializes/deserializes)"""
     def __init__(self):
