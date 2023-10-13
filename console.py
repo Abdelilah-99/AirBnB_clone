@@ -42,7 +42,7 @@ class HBNBCommand(cmd.Cmd):
             elif (list[0] == "Amenity"):
                 HBNBCommand.print_id(Amenity)
             elif (list[0] == "Place"):
-                HBNBCommand.print_id(State)
+                HBNBCommand.print_id(Place)
             else:
                 HBNBCommand.print_id(Review)
 
@@ -101,8 +101,8 @@ class HBNBCommand(cmd.Cmd):
             all_objs = storage.all()  # get the storage
             for obj_id in all_objs.keys():  # loop through the storage
                 list_of_dics.append(str(all_objs[obj_id]))
-
-            print(list_of_dics)
+            if (not (len(list_of_dics) < 1)):
+                print(list_of_dics)
         if len(list) > 0 and list[0] in HBNBCommand.classes_list:
             list_of_dics = []  # create empty dictionary
             all_objs = storage.all()  # get the storage
@@ -111,8 +111,11 @@ class HBNBCommand(cmd.Cmd):
                     ".")  # split the obj [basemodel].id
                 if (class_name == list[0]):
                     list_of_dics.append(str(all_objs[obj_id]))
-            print(list_of_dics)
-        elif (len(list) > 0 and list[0] not in HBNBCommand.classes_list and test_var == 0):
+
+            if (not (len(list_of_dics) < 1)):
+                print(list_of_dics)
+
+        if (len(list) > 0 and list[0] not in HBNBCommand.classes_list and test_var == 0):
             print("** class doesn't exist **")
 
     def do_update(self, args):
