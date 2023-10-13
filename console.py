@@ -91,7 +91,8 @@ class HBNBCommand(cmd.Cmd):
         storage.save()
 
     def do_all(self, args):
-        """Prints all string representation of all instances based or not on the class name"""
+        """Prints all string representation of all
+        instances based or not on the class name"""
         list = args.split(" ")
         test_var = 0
 
@@ -115,7 +116,8 @@ class HBNBCommand(cmd.Cmd):
             if (not (len(list_of_dics) < 1)):
                 print(list_of_dics)
 
-        if (len(list) > 0 and list[0] not in HBNBCommand.classes_list and test_var == 0):
+        if (len(list) > 0 and list[0] not in
+                HBNBCommand.classes_list and test_var == 0):
             print("** class doesn't exist **")
 
     def do_update(self, args):
