@@ -5,6 +5,7 @@ from models.city import City
 from models.user import User
 from models.amenity import Amenity
 
+
 class TestPlace(unittest.TestCase):
 
     def setUp(self):
@@ -90,6 +91,7 @@ class TestPlace(unittest.TestCase):
         all_objs = storage.all()
         reloaded_place = all_objs[f"Place.{place.id}"]
         self.assertEqual(place.name, reloaded_place.name)
+
 
 if __name__ == '__main__':
     unittest.main()

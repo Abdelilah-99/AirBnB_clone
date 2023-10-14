@@ -29,7 +29,8 @@ class TestFileStorage(unittest.TestCase):
         my_model = BaseModel()
         self.storage.new(my_model)
         self.assertEqual(
-            self.storage._FileStorage__objects[f"{my_model.__class__.__name__}.{my_model.id}"],
+            self.storage._FileStorage__objects
+            [f"{my_model.__class__.__name__}.{my_model.id}"],
             my_model
         )
 
@@ -49,7 +50,8 @@ class TestFileStorage(unittest.TestCase):
         reloaded_objects = new_storage.all()
         self.assertIn(
             f"{my_model.__class__.__name__}.{my_model.id}", reloaded_objects)
-        reloaded_model = reloaded_objects[f"{my_model.__class__.__name__}.{my_model.id}"]
+        reloaded_model = reloaded_objects
+        [f"{my_model.__class__.__name__}.{my_model.id}"]
         self.assertEqual(my_model.to_dict(), reloaded_model.to_dict())
 
     def tearDown(self):

@@ -20,7 +20,8 @@ class TestCity(unittest.TestCase):
     def test_attribute_assignment(self):
         self.city.state_id = "State.27c12caa-9c2a-40a4-8a6c-5c12a39105e8"
         self.city.name = "New York City"
-        self.assertEqual(self.city.state_id, "State.27c12caa-9c2a-40a4-8a6c-5c12a39105e8")
+        self.assertEqual(self.city.state_id,
+                         "State.27c12caa-9c2a-40a4-8a6c-5c12a39105e8")
         self.assertEqual(self.city.name, "New York City")
 
     def test_str_method(self):

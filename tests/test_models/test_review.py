@@ -4,6 +4,7 @@ from models import storage
 from models.place import Place
 from models.user import User
 
+
 class TestReview(unittest.TestCase):
 
     def setUp(self):
@@ -64,6 +65,7 @@ class TestReview(unittest.TestCase):
         all_objs = storage.all()
         reloaded_review = all_objs[f"Review.{review.id}"]
         self.assertEqual(review.text, reloaded_review.text)
+
 
 if __name__ == '__main__':
     unittest.main()
