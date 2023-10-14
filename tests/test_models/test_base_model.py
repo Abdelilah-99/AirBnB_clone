@@ -39,6 +39,8 @@ class TestBaseModel(unittest.TestCase):
         my_model_dict = my_model.to_dict()
         new_model = BaseModel(**my_model_dict)
         self.assertEqual(my_model.id, new_model.id)
+        self.assertNotEqual(my_model.created_at, new_model.created_at.isoformat())
+        self.assertNotEqual(my_model.updated_at, new_model.updated_at.isoformat())
 
 
 if __name__ == '__main__':
