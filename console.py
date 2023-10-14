@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+"""..."""
 import cmd
 from models.base_model import BaseModel
 from models.user import User
@@ -165,10 +165,6 @@ class HBNBCommand(cmd.Cmd):
         """Quit the CLI"""
         return True
 
-    def emptyline(self) :
-        """Does Nothing"""
-        pass
-    
     def help_quit(self):
         """Quit the CLI"""
         print("Quit command to exit the program")
@@ -177,6 +173,9 @@ class HBNBCommand(cmd.Cmd):
         """Quit the CLI"""
         print("Quit command to exit the program")
 
+    def emptyline(self) -> bool:
+        """do nothing"""
+        pass
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
