@@ -37,14 +37,9 @@ class BaseModel:
 
     def to_dict(self):
         """Return the dictionary representation of an instance"""
-        created_at_formatted = {"created_at": self.created_at.isoformat(
-        ) if isinstance(self.created_at, datetime) else self.created_at}
-        updated_at_formatted = {"updated_at": self.updated_at.isoformat(
-        ) if isinstance(self.updated_at, datetime) else self.updated_at}
-        add_class = {"__class__": self.__class__.__name__}
-
-        arr = [created_at_formatted, updated_at_formatted, add_class]
-        for item in arr:
-            self.__dict__.update(item)
-
-        return self.__dict__
+        class_name = self.__class__.__name__
+        obj_dict = self.__dict__.copy()
+        obj_dict['created_at'] = self.created_at.isoformat()
+        obj_dict['updated_at'] = self.updated_at.isoformat()
+        obj_dict['__class__'] = class_name
+        return obj_dict
