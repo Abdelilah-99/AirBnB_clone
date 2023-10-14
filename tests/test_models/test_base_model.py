@@ -4,6 +4,7 @@ from datetime import datetime
 
 
 class TestBaseModel(unittest.TestCase):
+    """..."""
 
     def test_initialization(self):
         """test intialization"""

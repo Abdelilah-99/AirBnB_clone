@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+"""..."""
 import cmd
 from models.base_model import BaseModel
 from models.user import User
@@ -111,15 +111,37 @@ class HBNBCommand(cmd.Cmd):
             for obj_id in all_objs.keys():  # loop through the storage
                 class_name, class_id = obj_id.split(
                     ".")  # split the obj [basemodel].id
+
                 if (class_name == list[0]):
                     list_of_dics.append(str(all_objs[obj_id]))
 
-            if (not (len(list_of_dics) < 1)):
+            if (not ((len(list_of_dics) < 1) or (len(list) == 1))):
                 print(list_of_dics)
+
+            if (len(list) == 1):
+                for class_list in list_of_dics:
+                    print(class_list)
 
         if (len(list) > 0 and list[0] not in
                 HBNBCommand.classes_list and test_var == 0):
             print("** class doesn't exist **")
+
+    def do_class_all(self, class_name):
+        """Prints all User instances"""
+        self.do_all(class_name)
+
+    def default(self, args):
+        """Handle custom command syntax."""
+        split_line = args.split(".")
+        if len(split_line) == 2:
+            class_name, command = split_line[0], split_line[1]
+            if class_name in HBNBCommand.classes_list and command == "all()":
+                # Handle class.all() commands here
+                self.do_class_all(class_name)
+            else:
+                print("class doesn't exist")
+        else:
+            super().default(args)
 
     def do_update(self, args):
         """Updates an instance based on the class name and id"""
@@ -168,7 +190,7 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self) :
         """Does Nothing"""
         pass
-
+    
     def help_quit(self):
         """Quit the CLI"""
         print("Quit command to exit the program")
@@ -177,6 +199,13 @@ class HBNBCommand(cmd.Cmd):
         """Quit the CLI"""
         print("Quit command to exit the program")
 
+    def emptyline(self):
+        """do nothing"""
+        pass
+
+
+for class_name in HBNBCommand.classes_list:
+    setattr(HBNBCommand, f"do_{class_name}_all", HBNBCommand.do_class_all)
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

@@ -6,23 +6,26 @@ from models.user import User
 
 
 class TestReview(unittest.TestCase):
+    """..."""
 
     def setUp(self):
-        # Create new instances for testing: Review, Place, and User
+        """# Create new instances for testing: Review, Place, and User"""
         self.review = Review()
         self.place = Place()
         self.user = User()
 
     def tearDown(self):
-        # Clear the storage for each test
+        """# Clear the storage for each test"""
         storage._FileStorage__objects = {}
 
     def test_initialization(self):
+        """..."""
         self.assertEqual(self.review.place_id, "")
         self.assertEqual(self.review.user_id, "")
         self.assertEqual(self.review.text, "")
 
     def test_attribute_assignment(self):
+        """..."""
         self.review.place_id = self.place.id
         self.review.user_id = self.user.id
         self.review.text = "A wonderful stay!"
@@ -31,11 +34,13 @@ class TestReview(unittest.TestCase):
         self.assertEqual(self.review.text, "A wonderful stay!")
 
     def test_str_method(self):
+        """..."""
         self.review.text = "Great experience!"
         expected_str = f"[Review] ({self.review.id}) {self.review.__dict__}"
         self.assertEqual(str(self.review), expected_str)
 
     def test_inheritance_from_base_model(self):
+        """..."""
         self.assertTrue(hasattr(self.review, "id"))
         self.assertTrue(hasattr(self.review, "created_at"))
         self.assertTrue(hasattr(self.review, "updated_at"))
@@ -43,6 +48,7 @@ class TestReview(unittest.TestCase):
         self.assertTrue(hasattr(self.review, "to_dict"))
 
     def test_serialization_and_deserialization(self):
+        """..."""
         self.review.text = "Excellent service"
         self.review.save()
 
@@ -53,7 +59,7 @@ class TestReview(unittest.TestCase):
         self.assertEqual(self.review.text, reloaded_review.text)
 
     def test_save_and_reload_methods(self):
-        # Create a new Review instance and save it
+        """# Create a new Review instance and save it"""
         review = Review()
         review.text = "Lovely accommodations"
         review.save()
