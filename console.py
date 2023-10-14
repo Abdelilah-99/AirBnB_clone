@@ -171,6 +171,10 @@ class HBNBCommand(cmd.Cmd):
         """Quit the CLI"""
         print("Quit command to exit the program")
 
+    def emptyline(self):
+        """Do nothing on empty input line (pressing Enter)"""
+        pass
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
