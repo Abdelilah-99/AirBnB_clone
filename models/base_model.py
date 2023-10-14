@@ -16,7 +16,7 @@ class BaseModel:
         self.updated_at = datetime.utcnow()
         models.storage.new(self)
 
-        if kwargs is not {} or None:
+        if kwargs:
             for key, value in kwargs.items():
                 if key in ("created_at, updated_at"):
                     self.__dict__[key] = datetime.strptime(
