@@ -16,6 +16,7 @@ class HBNBCommand(cmd.Cmd):
     classes_list = ("BaseModel", "User", "State",
                     "City", "Amenity", "Place", "Review")
 
+    @classmethod
     def print_id(self, class_name):
         """Call the class, then print its id"""
         my_model = class_name()
@@ -170,10 +171,6 @@ class HBNBCommand(cmd.Cmd):
     def help_EOF(self):
         """Quit the CLI"""
         print("Quit command to exit the program")
-
-    def emptyline(self):
-        """Do nothing on empty input line (pressing Enter)"""
-        pass
 
 
 if __name__ == '__main__':
