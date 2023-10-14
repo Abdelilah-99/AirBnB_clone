@@ -10,7 +10,7 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """instantiate an instance"""
-        
+
         if kwargs:
             for key, value in kwargs.items():
                 if key in ("created_at, updated_at"):
