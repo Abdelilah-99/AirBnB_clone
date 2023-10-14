@@ -18,6 +18,15 @@ class FileStorage:
         """instantiate the instance"""
         self.__file_path = "file.json"
         self.__objects = {}
+        self.classes = {
+            "BaseModel": BaseModel,
+            "User": User,
+            "State": State,
+            "City": City,
+            "Amenity": Amenity,
+            "Place": Place,
+            "Review": Review
+        }
 
     def all(self):
         """Returns the dictionary __objects"""
@@ -45,5 +54,6 @@ class FileStorage:
             data = json.load(file)
             for key, value in data.items():
                 class_name, class_id = key.split('.')
-                cls = eval(class_name)
-                self.__objects[key] = cls(**value)
+                if class_name in self.classes:
+                    cls = self.classes[class_name]
+                    self.__objects[key] = cls(**value)
