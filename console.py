@@ -115,7 +115,7 @@ class HBNBCommand(cmd.Cmd):
                 if (class_name == list[0]):
                     list_of_dics.append(str(all_objs[obj_id]))
 
-            if (not ((len(list_of_dics) < 1) or (len(list) == 1))):
+            if (not (len(list_of_dics) < 1) and (len(list) > 1)):
                 print(list_of_dics)
 
             if (len(list) == 1):
