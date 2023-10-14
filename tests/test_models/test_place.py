@@ -7,8 +7,10 @@ from models.amenity import Amenity
 
 
 class TestPlace(unittest.TestCase):
+    """..."""
 
     def setUp(self):
+        """..."""
         # Create new instances for testing: Place, City, User, and Amenity
         self.place = Place()
         self.city = City()
@@ -16,10 +18,11 @@ class TestPlace(unittest.TestCase):
         self.amenity = Amenity()
 
     def tearDown(self):
-        # Clear the storage for each test
+        """ # Clear the storage for each test"""
         storage._FileStorage__objects = {}
 
     def test_initialization(self):
+        """..."""
         self.assertEqual(self.place.city_id, "")
         self.assertEqual(self.place.user_id, "")
         self.assertEqual(self.place.name, "")
@@ -33,6 +36,7 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(self.place.amenity_ids, [])
 
     def test_attribute_assignment(self):
+        """..."""
         self.place.city_id = self.city.id
         self.place.user_id = self.user.id
         self.place.name = "Cozy Cottage"
@@ -57,11 +61,13 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(self.place.amenity_ids, [self.amenity.id])
 
     def test_str_method(self):
+        """..."""
         self.place.name = "Seaside Villa"
         expected_str = f"[Place] ({self.place.id}) {self.place.__dict__}"
         self.assertEqual(str(self.place), expected_str)
 
     def test_inheritance_from_base_model(self):
+        """..."""
         self.assertTrue(hasattr(self.place, "id"))
         self.assertTrue(hasattr(self.place, "created_at"))
         self.assertTrue(hasattr(self.place, "updated_at"))
@@ -69,6 +75,7 @@ class TestPlace(unittest.TestCase):
         self.assertTrue(hasattr(self.place, "to_dict"))
 
     def test_serialization_and_deserialization(self):
+        """..."""
         self.place.name = "Mountain Cabin"
         self.place.save()
 
@@ -79,7 +86,7 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(self.place.name, reloaded_place.name)
 
     def test_save_and_reload_methods(self):
-        # Create a new Place instance and save it
+        """# Create a new Place instance and save it"""
         place = Place()
         place.name = "Luxury Penthouse"
         place.save()
