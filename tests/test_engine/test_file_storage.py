@@ -48,11 +48,10 @@ class TestFileStorage(unittest.TestCase):
 
         # Check if the reloaded object matches the original object
         reloaded_objects = new_storage.all()
-        self.assertIn(
-            f"{my_model.__class__.__name__}.{my_model.id}", reloaded_objects)
-        reloaded_model = reloaded_objects
-        [f"{my_model.__class__.__name__}.{my_model.id}"]
+        self.assertIn(f"{my_model.__class__.__name__}.{my_model.id}", reloaded_objects)
+        reloaded_model = reloaded_objects[f"{my_model.__class__.__name__}.{my_model.id}"]
         self.assertEqual(my_model.to_dict(), reloaded_model.to_dict())
+
 
     def tearDown(self):
         """Remove the test JSON file if it exists"""
