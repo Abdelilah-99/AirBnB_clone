@@ -16,7 +16,6 @@ class HBNBCommand(cmd.Cmd):
     classes_list = ("BaseModel", "User", "State",
                     "City", "Amenity", "Place", "Review")
 
-    @classmethod
     def print_id(self, class_name):
         """Call the class, then print its id"""
         my_model = class_name()
