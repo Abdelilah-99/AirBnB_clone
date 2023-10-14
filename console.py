@@ -187,10 +187,6 @@ class HBNBCommand(cmd.Cmd):
         """Quit the CLI"""
         return True
 
-    def emptyline(self):
-        """Does Nothing"""
-        pass
-
     def help_quit(self):
         """Quit the CLI"""
         print("Quit command to exit the program")
