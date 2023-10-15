@@ -213,6 +213,10 @@ class HBNBCommand(cmd.Cmd):
                     "destroy" in command:
                 self.do_destroy(args)
 
+            elif class_name in HBNBCommand.classes_list and \
+                    "update" in command:
+                self.do_update(args)
+
             else:
                 print("class doesn't exist")
         else:
@@ -220,35 +224,75 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, args):
         """Updates an instance based on the class name and id"""
-        list = args.split(" ")
-        if (list[0] == ''):
-            print("** class name missing **")
-            return
-        if list[0] not in HBNBCommand.classes_list:
-            print("** class doesn't exist **")
-            return
-        if len(list) < 2:
-            print("** instance id missing **")
-            return
+        try:
+            main_class_name, command = args.split(".")
+            dummy_str = command.split("(")
+            att_ids = dummy_str[1].strip(')')
+            list_of_update = att_ids.split(",")
+            new_list = []
+            for att in list_of_update:
+                new_att = att.replace('"', '').replace(" ", "")
+                new_list.append(new_att)
 
-        if len(list) < 3:
-            print("** attribute name missing **")
-            return
-        if len(list) < 4:
-            print("** value missing **")
-            return
+            show_id = new_list[0]
+            if (main_class_name == ""):
+                print("** class name missing **")
+            elif main_class_name not in HBNBCommand.classes_list:
+                print("** class doesn't exist **")
+            elif show_id == "":
+                print("** instance id missing **")
+            elif len(new_list) < 2:
+                """"""
+                print("** attribute name missing **")
+                return
+            elif len(new_list) < 3:
+                print("** value missing **")
+                return
+            else:
+                key = main_class_name + '.' + show_id
+                if key not in storage.all():
+                    print("** no instance found **")
+                    return
+                if (len(new_list) == 3):
+                    all_objs = storage.all()
+                    for key in all_objs:
+                        if (main_class_name in HBNBCommand.classes_list):
+                            class_name, class_id = key.split(".")
+                            if main_class_name == class_name \
+                                    and show_id == class_id:
+                                setattr(all_objs[key],
+                                        new_list[1], new_list[2])
 
-        key = list[0] + '.' + list[1]
-        if key not in storage.all():
-            print("** no instance found **")
-            return
-        if (len(list) == 4):
-            all_objs = storage.all()
-            for key in all_objs:
-                if (list[0] in HBNBCommand.classes_list):
-                    class_name, class_id = key.split(".")
-                    if list[0] == class_name and list[1] == class_id:
-                        setattr(all_objs[key], list[2], list[3])
+        except ValueError:
+            list = args.split(" ")
+            if (list[0] == ''):
+                print("** class name missing **")
+                return
+            if list[0] not in HBNBCommand.classes_list:
+                print("** class doesn't exist **")
+                return
+            if len(list) < 2:
+                print("** instance id missing **")
+                return
+
+            if len(list) < 3:
+                print("** attribute name missing **")
+                return
+            if len(list) < 4:
+                print("** value missing **")
+                return
+
+            key = list[0] + '.' + list[1]
+            if key not in storage.all():
+                print("** no instance found **")
+                return
+            if (len(list) == 4):
+                all_objs = storage.all()
+                for key in all_objs:
+                    if (list[0] in HBNBCommand.classes_list):
+                        class_name, class_id = key.split(".")
+                        if list[0] == class_name and list[1] == class_id:
+                            setattr(all_objs[key], list[2], list[3])
 
     def help_update(self, args):
         """Help page for the update"""
