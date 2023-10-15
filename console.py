@@ -95,40 +95,60 @@ class HBNBCommand(cmd.Cmd):
         """Prints all string representation of all
         instances based or not on the class name"""
         list = args.split(" ")
-        test_var = 0
-
+        is_all_only = 0
         if (list[0] == '' and len(list) == 1):
-            test_var = 1
+            is_all_only = 1
             list_of_dics = []  # create empty dictionary
             all_objs = storage.all()  # get the storage
             for obj_id in all_objs.keys():  # loop through the storage
                 list_of_dics.append(str(all_objs[obj_id]))
             if (not (len(list_of_dics) < 1)):
                 print(list_of_dics)
-        if len(list) > 0 and list[0] in HBNBCommand.classes_list:
+        try:
+            main_class_name, command = args.split(".")
+            is_using_dot = True
+        except ValueError:
+            main_class_name = list[0]
+            is_using_dot = False
+            pass
+
+        if len(list) > 0 and ((list[0] in HBNBCommand.classes_list
+                               or main_class_name
+                               in HBNBCommand.classes_list)):
             list_of_dics = []  # create empty dictionary
             all_objs = storage.all()  # get the storage
             for obj_id in all_objs.keys():  # loop through the storage
                 class_name, class_id = obj_id.split(
                     ".")  # split the obj [basemodel].id
 
-                if (class_name == list[0]):
+                if ((class_name == list[0] and is_using_dot is False)
+                    or ((class_name == main_class_name)
+                        and is_using_dot is True)):
                     list_of_dics.append(str(all_objs[obj_id]))
 
-            if (not (len(list_of_dics) < 1) and (len(list) > 1)):
+            if (not is_using_dot):
                 print(list_of_dics)
 
-            if (len(list) == 1):
-                for class_list in list_of_dics:
-                    print(class_list)
-
-        if (len(list) > 0 and list[0] not in
-                HBNBCommand.classes_list and test_var == 0):
+            if (len(list) == 1 and is_using_dot):
+                class_name, command = args.split(".")
+                if (command == "count()"):
+                    count = 0
+                    for class_list in list_of_dics:
+                        count += 1
+                    return count
+                elif (command == "all()"):
+                    for class_list in list_of_dics:
+                        print(class_list)
+        elif (len(list) > 0 and (list[0]
+                                 not in HBNBCommand.classes_list
+                                 or main_class_name
+                                 not in HBNBCommand.classes_list)
+              and is_all_only == 0):
             print("** class doesn't exist **")
 
     def do_class_all(self, class_name):
         """Prints all User instances"""
-        self.do_all(class_name)
+        return self.do_all(class_name)
 
     def default(self, args):
         """Handle custom command syntax."""
@@ -137,7 +157,12 @@ class HBNBCommand(cmd.Cmd):
             class_name, command = split_line[0], split_line[1]
             if class_name in HBNBCommand.classes_list and command == "all()":
                 # Handle class.all() commands here
-                self.do_class_all(class_name)
+                self.do_class_all(args)
+            elif class_name in HBNBCommand.classes_list and \
+                    command == "count()":
+                # Handle class.count() commands here
+                count = self.do_class_all(args)
+                print(count)
             else:
                 print("class doesn't exist")
         else:
