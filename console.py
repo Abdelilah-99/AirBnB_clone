@@ -49,26 +49,48 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, args):
         """Prints the string representation of an instance"""
-        list = args.split(" ")
+        try:
+            main_class_name, command = args.split(".")
+            dummy_str = command.split("(")
+            show_id = dummy_str[1].strip(')"').strip('"')
+            if (main_class_name == ""):
+                print("** class name missing **")
+            elif main_class_name not in HBNBCommand.classes_list:
+                print("** class doesn't exist **")
+            elif show_id == "":
+                print("** instance id missing **")
+            else:
+                all_objs = storage.all()
+                is_found = False
+                for obj_id in all_objs.keys():
+                    class_name, class_id = obj_id.split(".")
+                    if (main_class_name == class_name and show_id == class_id):
+                        is_found = True
+                        obj = all_objs[obj_id]
+                        print(obj)
+                if (not is_found):
+                    print("** no instance found **")
 
-        if (list[0] == ""):
-            print("** class name missing **")
-        elif list[0] not in HBNBCommand.classes_list:
-            print("** class doesn't exist **")
-        elif len(list) < 2:
-            print("** instance id missing **")
-        else:
-            all_objs = storage.all()
-            is_found = False
-            for obj_id in all_objs.keys():
-                current_class, id = list[0], list[1]
-                class_name, class_id = obj_id.split(".")
-                if (current_class == class_name and id == class_id):
-                    is_found = True
-                    obj = all_objs[obj_id]
-                    print(obj)
-            if (not is_found):
-                print("** no instance found **")
+        except ValueError:
+            list = args.split(" ")
+            if (list[0] == ""):
+                print("** class name missing **")
+            elif list[0] not in HBNBCommand.classes_list:
+                print("** class doesn't exist **")
+            elif len(list) < 2:
+                print("** instance id missing **")
+            else:
+                all_objs = storage.all()
+                is_found = False
+                for obj_id in all_objs.keys():
+                    current_class, id = list[0], list[1]
+                    class_name, class_id = obj_id.split(".")
+                    if (current_class == class_name and id == class_id):
+                        is_found = True
+                        obj = all_objs[obj_id]
+                        print(obj)
+                if (not is_found):
+                    print("** no instance found **")
 
     def do_destroy(self, args):
         """Deletes an instance based on the class name"""
@@ -163,6 +185,10 @@ class HBNBCommand(cmd.Cmd):
                 # Handle class.count() commands here
                 count = self.do_class_all(args)
                 print(count)
+            elif class_name in HBNBCommand.classes_list and \
+                    "show" in command:
+                self.do_show(args)
+
             else:
                 print("class doesn't exist")
         else:
