@@ -1,0 +1,121 @@
+
+.places h1 {
+	font-size: 30px;
+	font-weight: bold;
+}
+
+article {
+	width: 390px;
+	padding: 20px;
+	margin: 20px;
+	border: #FF5A5F solid 1px;
+	border-radius: 4px;
+}
+
+div .plc{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	text-align: center;
+}
+.places h2{
+	font-size: 30px;
+	margin-bottom: 50px;
+}
+.price_by_night {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #ff5a5f;
+	font-size: 30px;
+	border: #ff5a5f 4px solid ;
+	border-radius: 50%;
+	width: 70px;
+	height: 70px;
+	position: absolute;
+	right: 0;
+  }
+.myhome{
+	position: relative;
+	display: flex;
+	justify-content: center;
+}
+.information{
+	display: flex;
+	height: 80px;
+	border-top: #DDDDDD 1px solid;
+	border-bottom: #DDDDDD 1px solid;
+	justify-content: space-between;
+}
+.max_guest{
+	
+	background-image: url(../images/icon_group.png);
+	background-position: 25px;
+	background-repeat: no-repeat;
+    height: 60px;
+	width: 100px;
+}
+.number_rooms{
+	background-image: url(../images/icon_bed.png);
+	background-position: 25px;
+	background-repeat: no-repeat;
+    height: 60px;
+	width: 100px;
+}
+.number_bathrooms{
+	background-image: url(../images/icon_bath.png);
+	background-position: 25px;
+	background-repeat: no-repeat;
+    height: 60px;
+	width: 100px;
+}
+
+.information > div {
+	display: flex;
+	flex-direction: column;
+}
+.user p strong, p{
+	text-align: start;
+}
+.amenitie h2, .reviews h2{
+	margin-bottom: 17px;
+	font-size: 16px;
+	text-align: left;
+	padding-bottom: 10px;
+	border-bottom: #DDDDDD 1px solid;
+}
+article .amenitie{
+	width: 100%;
+	padding: 0;
+}
+article .amenitie ul{
+	list-style-type: none;
+	text-align: left;
+	line-height: 30px;
+	padding-left: 0;
+}
+.tv {
+	background: url('../images/icon_tv.png') no-repeat;
+	background-size: contain;
+}
+.wifi{
+	background: url('../images/icon_wifi.png') no-repeat;
+	background-size: contain;
+}
+.massage{
+	background: url('../images/icon_pets.png') no-repeat;
+	background-size: contain;
+}
+.amenitie li {
+	text-indent: 40px;
+}
+.reviews ul{
+	list-style-type: none;
+	text-align: left;
+	padding-left: 0;
+	line-height: 10px;
+}
+.reviews ul p{
+	font-size: 12px;
+	line-height: 15px;
+}
